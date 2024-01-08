@@ -32,10 +32,16 @@ router.post("/", (req, res) => {
 });
 
 router.delete("/:id", (req, res) => {
-  const id = parseInt(req.params.id);
-  const check = user.filter((user) => user.id === id);
-  res.send(user);
+//   const id = parseInt(req.params.id);
+//   const check = user.filter((user) => return {user.id != id});
+//   res.send(user);
+const index = user.findIndex((u) => u.id === (req.params.id));
+  if (index === -1) return res.status(404).json({ message: "user not found" });
+
+  user.splice(index, -1);
+  res.json({ message: "User deleted" });
 });
+
 
 router.patch("/:id", (req, res) => {
   const id = req.params.id;
